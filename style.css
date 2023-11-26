@@ -1,0 +1,24 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Arial', sans-serif; /* Example font, you can change it */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.quote-container {
+    text-align: center;
+    max-width: 80%;
+}
+
+#quote {
+    font-size: 24px; /* Example font size, you can adjust it */
+}
+
+#author {
+    font-size: 20px; /* Example font size, you can adjust it */
+    margin-top: 20px;
+}
