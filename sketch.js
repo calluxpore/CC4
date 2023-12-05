@@ -53,13 +53,14 @@ function processQuote(data) {
 function draw() {
   translate(-windowWidth / 2, -windowHeight / 2);
   background(0, 50);
-
   if (videoReady) {
+    push();
     grid.display();
+    pop();
   } else {
     console.log("Waiting for video...");
   }
-
+  resetMatrix();
   displayQuote();
 }
 
