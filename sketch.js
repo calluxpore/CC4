@@ -1,5 +1,3 @@
-// Sketch.js
-
 let quoteData;
 let lastFetchTime;
 let myFont;
@@ -9,19 +7,31 @@ let slider;
 let video;
 let grid;
 let videoReady = false;
+let canvas2D, canvas3D;
 
 function preload() {
   myFont = loadFont('Atkinson-Hyperlegible-Regular-102.ttf');
 }
 
+function fetchQuote() {
+  lastFetchTime = millis();
+  let url = 'https://api.quotable.io/random';
+  loadJSON(url, processQuote);
+}
+
 function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
+  // Create a 2D canvas for text and 2D elements
+  canvas2D = createCanvas(windowWidth, windowHeight);
+  canvas2D.position(0, 0);
+
+  // Create a WEBGL canvas for 3D elements
+  canvas3D = createGraphics(windowWidth, windowHeight, WEBGL);
+  
   frameRate(fr);
   textFont(myFont);
   textSize(32);
   textAlign(CENTER, CENTER);
   textWrap(WORD);
-  background(0);
 
   slider = createSlider(10, 60, 30, 1);
   slider.position(10, 10);
@@ -31,13 +41,36 @@ function setup() {
     console.log('Video is ready');
     videoReady = true;
   });
-  video.size(width, height);
+  video.size(canvas3D.width, canvas3D.height);
   video.hide();
 
   grid = new CircleGrid();
 
   fetchQuote();
   setInterval(fetchQuote, 30000);
+}
+
+function draw() {
+  // Clear the main 2D canvas
+  clear();
+
+  // Draw on the WEBGL canvas
+  if (videoReady) {
+    canvas3D.push();
+    canvas3D.translate(-canvas3D.width / 2, -canvas3D.height / 2);
+    grid.display();
+    canvas3D.pop();
+  } else {
+    console.log("Waiting for video...");
+  }
+
+  // Display the WEBGL canvas onto the main canvas
+  image(canvas3D, 0, 0);
+
+  // Draw the 2D elements (quote box and text)
+  if (quoteData) {
+    displayQuote();
+  }
 }
 
 function fetchQuote() {
@@ -50,19 +83,6 @@ function processQuote(data) {
   quoteData = data;
 }
 
-function draw() {
-  translate(-windowWidth / 2, -windowHeight / 2);
-  background(0, 50);
-  if (videoReady) {
-    push();
-    grid.display();
-    pop();
-  } else {
-    console.log("Waiting for video...");
-  }
-  resetMatrix();
-  displayQuote();
-}
 
 function displayQuote() {
   if (quoteData) {
