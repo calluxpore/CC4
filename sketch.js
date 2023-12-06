@@ -1,7 +1,18 @@
 let quoteData;
 let lastFetchTime;
 let myFont;
-let listOfColors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#eeb300", "#e9d8a6", "#94d2bd", "#0a9396", "#005f73"];
+let listOfColors = [
+  "#9b2226",
+  "#ae2012",
+  "#bb3e03",
+  "#ca6702",
+  "#ee9b00",
+  "#eeb300",
+  "#e9d8a6",
+  "#94d2bd",
+  "#0a9396",
+  "#005f73",
+];
 let fr = 60;
 let slider;
 let video;
@@ -10,23 +21,19 @@ let videoReady = false;
 let canvas2D, canvas3D;
 
 function preload() {
-  myFont = loadFont('Atkinson-Hyperlegible-Regular-102.ttf');
+  myFont = loadFont("Atkinson-Hyperlegible-Regular-102.ttf");
 }
 
 function fetchQuote() {
   lastFetchTime = millis();
-  let url = 'https://api.quotable.io/random';
+  let url = "https://api.quotable.io/random";
   loadJSON(url, processQuote);
 }
 
 function setup() {
-  // Create a 2D canvas for text and 2D elements
   canvas2D = createCanvas(windowWidth, windowHeight);
   canvas2D.position(0, 0);
-
-  // Create a WEBGL canvas for 3D elements
   canvas3D = createGraphics(windowWidth, windowHeight, WEBGL);
-  
   frameRate(fr);
   textFont(myFont);
   textSize(32);
@@ -35,10 +42,10 @@ function setup() {
 
   slider = createSlider(10, 60, 30, 1);
   slider.position(10, 10);
-  slider.style('width', '150px');
+  slider.style("width", "150px");
 
-  video = createCapture(VIDEO, function() {
-    console.log('Video is ready');
+  video = createCapture(VIDEO, function () {
+    console.log("Video is ready");
     videoReady = true;
   });
   video.size(canvas3D.width, canvas3D.height);
@@ -69,14 +76,13 @@ function draw() {
 
 function fetchQuote() {
   lastFetchTime = millis();
-  let url = 'https://api.quotable.io/random';
+  let url = "https://api.quotable.io/random";
   loadJSON(url, processQuote);
 }
 
 function processQuote(data) {
   quoteData = data;
 }
-
 
 function displayQuote() {
   if (quoteData) {
@@ -94,7 +100,7 @@ function displayQuote() {
     const textBoxY = height - textBoxHeight;
     const cornerRadius = 20;
 
-    stroke('#FFFFFF');
+    stroke("#FFFFFF");
     fill(0);
     rect(0, textBoxY, width, textBoxHeight, cornerRadius);
     noStroke();
@@ -121,12 +127,12 @@ function splitQuoteIntoLines(quote, maxWidth) {
   let words = quote.split(" ");
   let lines = [];
   let currentLine = "";
-  
+
   for (let i = 0; i < words.length; i++) {
     let word = words[i];
     let testLine = currentLine + word + " ";
     let metrics = textWidth(testLine);
-    
+
     if (metrics > maxWidth && i > 0) {
       lines.push(currentLine.trim());
       currentLine = word + " ";
@@ -170,7 +176,13 @@ class CircleGrid {
     for (let y = 0; y < height; y += this.gridSize) {
       let row = [];
       for (let x = 0; x < width; x += this.gridSize) {
-        row.push(new CircleClass(x + this.gridSize / 2, y + this.gridSize / 2, this.gridSize / 2));
+        row.push(
+          new CircleClass(
+            x + this.gridSize / 2,
+            y + this.gridSize / 2,
+            this.gridSize / 2
+          )
+        );
       }
       this.circles.push(row);
     }
@@ -199,7 +211,7 @@ class CircleGrid {
         let index = (y * video.width + x) * 4;
         if (index < video.pixels.length) {
           let r = video.pixels[index];
-          if (typeof r === 'number') {
+          if (typeof r === "number") {
             let dia = map(r, 0, 255, this.gridSlider, 2);
             this.circles[i][j].size = dia;
           }
@@ -210,7 +222,7 @@ class CircleGrid {
 }
 
 function keyPressed() {
-  if (key === 's' || key === 'S') {
-    saveCanvas('myCanvas', 'png');
+  if (key === "s" || key === "S") {
+    saveCanvas("myCanvas", "png");
   }
 }
