@@ -61,11 +61,7 @@ function draw() {
   } else {
     console.log("Waiting for video...");
   }
-
-  // Display the WEBGL canvas onto the main canvas
   image(canvas3D, 0, 0);
-
-  // Draw the 2D elements (quote box and text)
   if (quoteData) {
     displayQuote();
   }
