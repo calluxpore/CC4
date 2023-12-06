@@ -1,7 +1,7 @@
 let quoteData;
 let lastFetchTime;
 let myFont;
-let listOfColors = ["#001219", "#005F73", "#0A9396", "#94D2BD", "#E9D8A6", "#EE9B00", "#CA6702", "#BB3E03", "#AE2012", "#9B2226"];
+let listOfColors = ["#9b2226", "#ae2012", "#bb3e03", "#ca6702", "#ee9b00", "#eeb300", "#e9d8a6", "#94d2bd", "#0a9396", "#005f73"];
 let fr = 60;
 let slider;
 let video;
