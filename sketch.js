@@ -1,7 +1,7 @@
 let quoteData;
 let lastFetchTime;
 let myFont;
-let listOfColors = ["#5C0000", "#751717", "#BA0C0C", "#FF0000", "#FFEBEB", "#ECFFEB", "#27A300", "#2A850E", "#2D661B", "#005C00"];
+let listOfColors = ["#001219", "#005F73", "#0A9396", "#94D2BD", "#E9D8A6", "#EE9B00", "#CA6702", "#BB3E03", "#AE2012", "#9B2226"];
 let fr = 60;
 let slider;
 let video;
@@ -51,6 +51,7 @@ function setup() {
 }
 
 function draw() {
+  background(0);
   // Clear the main 2D canvas
   clear();
 
@@ -103,7 +104,7 @@ function displayQuote() {
     stroke('#FFFFFF');
     fill(0);
     rect(0, textBoxY, width, textBoxHeight, cornerRadius);
-
+    noStroke();
     let currentY = textBoxY + padding;
     for (let line of lines) {
       let words = line.split(" ");
