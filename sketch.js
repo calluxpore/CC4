@@ -1,6 +1,14 @@
-let quoteData;
-let lastFetchTime;
-let myFont;
+// ChatGPT Attribution: This code was reviewed and commented by ChatGPT, an AI developed by OpenAI.
+// Font Attribution: Atkinson Hyperlegible Font by the Braille Institute. Source: https://brailleinstitute.org/freefont
+// API Attribution: Quotable API by Luke Peavey. Source: https://github.com/lukePeavey/quotable
+// Inspiration/Reference: Work by Taylor Tidwell. YouTube Video: https://youtu.be/8g-DF9hKMgg and p5.js Sketch: https://editor.p5js.org/ttidwell24/sketches/q6on3p4oy
+// Inspiration/Reference: Work by Jeff Thompson. YouTube Video: https://www.youtube.com/watch?v=exrH7tvt3f4
+
+// Global variables for different functionalities
+let quoteData; // Stores the fetched quote data
+let lastFetchTime; // Records the time of the last fetch operation
+let myFont; // Font used for text rendering
+// Predefined list of colors used in the application
 let listOfColors = [
   "#9b2226",
   "#ae2012",
@@ -13,13 +21,14 @@ let listOfColors = [
   "#0a9396",
   "#005f73",
 ];
-let fr = 60;
-let slider;
-let video;
-let grid;
-let videoReady = false;
-let canvas2D, canvas3D;
+let fr = 60; // Frame rate for the sketch
+let slider; // Slider UI element
+let video; // Video capture object
+let grid; // Object representing a grid of circles
+let videoReady = false; // Flag to check if video is ready
+let canvas2D, canvas3D; // Two canvases for 2D and 3D graphics
 
+// Preload function to load assets before the sketch starts
 function preload() {
   myFont = loadFont("Atkinson-Hyperlegible-Regular-102.ttf");
 }
@@ -30,20 +39,25 @@ function fetchQuote() {
   loadJSON(url, processQuote);
 }
 
+// Setup function to initialize the canvas and other elements
 function setup() {
+  // Canvas setup
   canvas2D = createCanvas(windowWidth, windowHeight);
   canvas2D.position(0, 0);
   canvas3D = createGraphics(windowWidth, windowHeight, WEBGL);
+  // Basic setup for the sketch
   frameRate(fr);
   textFont(myFont);
   textSize(32);
   textAlign(CENTER, CENTER);
   textWrap(WORD);
 
+  // Creating a slider for user input
   slider = createSlider(10, 60, 30, 1);
   slider.position(10, 10);
   slider.style("width", "150px");
 
+  // Setting up video capture
   video = createCapture(VIDEO, function () {
     console.log("Video is ready");
     videoReady = true;
@@ -51,12 +65,15 @@ function setup() {
   video.size(canvas3D.width, canvas3D.height);
   video.hide();
 
+  // Initializing the grid of circles
   grid = new CircleGrid();
 
+  // Fetching a quote and setting an interval
   fetchQuote();
   setInterval(fetchQuote, 30000);
 }
 
+// Draw function to render each frame
 function draw() {
   background(0);
   //clear();
@@ -74,18 +91,21 @@ function draw() {
   }
 }
 
+// Function to fetch a new quote
 function fetchQuote() {
   lastFetchTime = millis();
   let url = "https://api.quotable.io/random";
   loadJSON(url, processQuote);
 }
 
+// Function to process the fetched quote
 function processQuote(data) {
   quoteData = data;
 }
 
 function displayQuote() {
   if (quoteData) {
+    // Drawing the quote text on canvas
     textSize(32);
     textAlign(LEFT, TOP);
     const padding = 20;
@@ -123,6 +143,7 @@ function displayQuote() {
   }
 }
 
+// Utility function to split the quote into lines
 function splitQuoteIntoLines(quote, maxWidth) {
   let words = quote.split(" ");
   let lines = [];
@@ -144,7 +165,9 @@ function splitQuoteIntoLines(quote, maxWidth) {
   return lines;
 }
 
+// Classes for Circle and CircleGrid
 class CircleClass {
+  // Constructor and display methods for Circle
   constructor(px, py, s) {
     this.positionX = px;
     this.positionY = py;
@@ -166,6 +189,7 @@ class CircleClass {
 }
 
 class CircleGrid {
+  // Constructor, display, and update methods for CircleGrid
   constructor() {
     this.gridSize = 30;
     this.circles = [];
@@ -221,6 +245,7 @@ class CircleGrid {
   }
 }
 
+// Function to handle key press events
 function keyPressed() {
   if (key === "s" || key === "S") {
     saveCanvas("myCanvas", "png");

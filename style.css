@@ -1,7 +1,13 @@
 /* style.css */
 
-body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+/* ChatGPT Attribution: This CSS file was reviewed and commented by ChatGPT, an AI developed by OpenAI.
+   Font Attribution: Atkinson Hyperlegible Font by the Braille Institute. Source: https://brailleinstitute.org/freefont
+   API Attribution: Quotable API by Luke Peavey. Source: https://github.com/lukePeavey/quotable
+   Inspiration/Reference: Work by Taylor Tidwell. YouTube Video: https://youtu.be/8g-DF9hKMgg and p5.js Sketch: https://editor.p5js.org/ttidwell24/sketches/q6on3p4oy
+   Inspiration/Reference: Work by Jeff Thompson. YouTube Video: https://www.youtube.com/watch?v=exrH7tvt3f4
+
+   body {
+    margin: 0; /* Removes the default margin from the body element */
+    padding: 0; /* Removes the default padding from the body element */
+    overflow: hidden; /* Hides any content that overflows the body's box */
 }
