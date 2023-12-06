@@ -4,11 +4,11 @@
 // Inspiration/Reference: Work by Taylor Tidwell. YouTube Video: https://youtu.be/8g-DF9hKMgg and p5.js Sketch: https://editor.p5js.org/ttidwell24/sketches/q6on3p4oy
 // Inspiration/Reference: Work by Jeff Thompson. YouTube Video: https://www.youtube.com/watch?v=exrH7tvt3f4
 
+
 // Global variables for different functionalities
 let quoteData; // Stores the fetched quote data
 let lastFetchTime; // Records the time of the last fetch operation
 let myFont; // Font used for text rendering
-// Predefined list of colors used in the application
 let listOfColors = [
   "#9b2226",
   "#ae2012",
@@ -33,31 +33,21 @@ function preload() {
   myFont = loadFont("Atkinson-Hyperlegible-Regular-102.ttf");
 }
 
-function fetchQuote() {
-  lastFetchTime = millis();
-  let url = "https://api.quotable.io/random";
-  loadJSON(url, processQuote);
-}
-
-// Setup function to initialize the canvas and other elements
 function setup() {
-  // Canvas setup
   canvas2D = createCanvas(windowWidth, windowHeight);
   canvas2D.position(0, 0);
   canvas3D = createGraphics(windowWidth, windowHeight, WEBGL);
-  // Basic setup for the sketch
+
   frameRate(fr);
   textFont(myFont);
   textSize(32);
   textAlign(CENTER, CENTER);
   textWrap(WORD);
 
-  // Creating a slider for user input
   slider = createSlider(10, 60, 30, 1);
   slider.position(10, 10);
   slider.style("width", "150px");
 
-  // Setting up video capture
   video = createCapture(VIDEO, function () {
     console.log("Video is ready");
     videoReady = true;
@@ -65,18 +55,14 @@ function setup() {
   video.size(canvas3D.width, canvas3D.height);
   video.hide();
 
-  // Initializing the grid of circles
   grid = new CircleGrid();
 
-  // Fetching a quote and setting an interval
   fetchQuote();
   setInterval(fetchQuote, 30000);
 }
 
-// Draw function to render each frame
 function draw() {
-  background(0);
-  //clear();
+  background(0, 50);
   if (videoReady) {
     canvas3D.push();
     canvas3D.translate(-canvas3D.width / 2, -canvas3D.height / 2);
@@ -167,7 +153,6 @@ function splitQuoteIntoLines(quote, maxWidth) {
 
 // Classes for Circle and CircleGrid
 class CircleClass {
-  // Constructor and display methods for Circle
   constructor(px, py, s) {
     this.positionX = px;
     this.positionY = py;
@@ -189,43 +174,22 @@ class CircleClass {
 }
 
 class CircleGrid {
-  // Constructor, display, and update methods for CircleGrid
+  // Manages a grid of circles that respond to video input
   constructor() {
     this.gridSize = 30;
     this.circles = [];
-    this.initializeGrid();
-  }
 
-  initializeGrid() {
-    for (let y = 0; y < height; y += this.gridSize) {
+    for (let y = 0; y < video.height; y += this.gridSize) {
       let row = [];
-      for (let x = 0; x < width; x += this.gridSize) {
-        row.push(
-          new CircleClass(
-            x + this.gridSize / 2,
-            y + this.gridSize / 2,
-            this.gridSize / 2
-          )
-        );
+      for (let x = 0; x < video.width; x += this.gridSize) {
+        row.push(new CircleClass(x + this.gridSize / 2, y + this.gridSize / 2, this.gridSize / 2));
       }
       this.circles.push(row);
     }
   }
 
   display() {
-    if (videoReady) {
-      video.loadPixels();
-      this.updateCircles();
-    }
-
-    for (let row of this.circles) {
-      for (let circle of row) {
-        circle.display();
-      }
-    }
-  }
-
-  updateCircles() {
+    video.loadPixels();
     this.gridSlider = slider.value();
 
     for (let i = 0; i < this.circles.length; i++) {
@@ -233,20 +197,22 @@ class CircleGrid {
         let x = j * this.gridSize;
         let y = i * this.gridSize;
         let index = (y * video.width + x) * 4;
-        if (index < video.pixels.length) {
-          let r = video.pixels[index];
-          if (typeof r === "number") {
-            let dia = map(r, 0, 255, this.gridSlider, 2);
-            this.circles[i][j].size = dia;
-          }
-        }
+        let r = video.pixels[index];
+        let dia = map(r, 0, 255, this.gridSlider, 2);
+        this.circles[i][j].size = dia;
+        this.circles[i][j].display();
       }
     }
+
+    // Randomly change color of one circle
+    let randomRow = int(random(this.circles.length));
+    let randomCol = int(random(this.circles[0].length));
+    this.circles[randomRow][randomCol].c = listOfColors[int(random(0, listOfColors.length))];
   }
 }
 
-// Function to handle key press events
 function keyPressed() {
+  // Saves the canvas as an image when 's' key is pressed
   if (key === "s" || key === "S") {
     saveCanvas("myCanvas", "png");
   }
