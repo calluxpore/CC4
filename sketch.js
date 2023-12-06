@@ -52,10 +52,7 @@ function setup() {
 
 function draw() {
   background(0);
-  // Clear the main 2D canvas
-  clear();
-
-  // Draw on the WEBGL canvas
+  //clear();
   if (videoReady) {
     canvas3D.push();
     canvas3D.translate(-canvas3D.width / 2, -canvas3D.height / 2);
