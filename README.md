@@ -38,7 +38,7 @@ To run this project:
 - `sketch.js`: JavaScript file with p5.js for interactive features.
 
 ## Acknowledgements
-
+- **ChatGPT Attribution:** This code was reviewed and commented by ChatGPT, an AI developed by OpenAI.
 - **Font Attribution:** Atkinson Hyperlegible Font by the Braille Institute. [More Info](https://brailleinstitute.org/freefont)
 - **API Attribution:** Quotable API by Luke Peavey. [API Link](https://github.com/lukePeavey/quotable)
 - **Inspiration/References:**
