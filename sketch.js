@@ -1,8 +1,11 @@
-// ChatGPT Attribution: This code was reviewed and commented by ChatGPT, an AI developed by OpenAI.
-// Font Attribution: Atkinson Hyperlegible Font by the Braille Institute. Source: https://brailleinstitute.org/freefont
-// API Attribution: Quotable API by Luke Peavey. Source: https://github.com/lukePeavey/quotable
-// Inspiration/Reference: Work by Taylor Tidwell. YouTube Video: https://youtu.be/8g-DF9hKMgg and p5.js Sketch: https://editor.p5js.org/ttidwell24/sketches/q6on3p4oy
-// Inspiration/Reference: Work by Jeff Thompson. YouTube Video: https://www.youtube.com/watch?v=exrH7tvt3f4
+//ChatGPT Attribution: This code was reviewed and commented by ChatGPT, an AI developed by OpenAI
+//Font Attribution: Atkinson Hyperlegible Font by the Braille Institute.
+//API Attribution: Quotable API by Luke Peavey.
+//Inspiration/References:
+  //Work by Taylor Tidwell. YouTube Video and p5.js Sketch
+  //Work by Jeff Thompson. YouTube Video
+//Canvas Mirroring Technique: Kate Hartman | OCAD University
+//Course Information: Work done as part of DGIF 6037 Creation & Computation Fall 2023 in the Digital Futures Graduate Program at OCAD University, Toronto, Canada
 
 
 // Global variables for different functionalities
