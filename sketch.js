@@ -2,11 +2,10 @@
 //Font Attribution: Atkinson Hyperlegible Font by the Braille Institute.
 //API Attribution: Quotable API by Luke Peavey.
 //Inspiration/References:
-  //Work by Taylor Tidwell. YouTube Video and p5.js Sketch
-  //Work by Jeff Thompson. YouTube Video
-//Canvas Mirroring Technique: Kate Hartman | OCAD University
+//Work by Taylor Tidwell. YouTube Video and p5.js Sketch
+//Work by Jeff Thompson. YouTube Video
+//Canvas Mirroring Technique: Kate Hartman & Nicholas Puckett| OCAD University
 //Course Information: Work done as part of DGIF 6037 Creation & Computation Fall 2023 in the Digital Futures Graduate Program at OCAD University, Toronto, Canada
-
 
 // Global variables for different functionalities
 let quoteData; // Stores the fetched quote data
@@ -95,10 +94,10 @@ function processQuote(data) {
 function displayQuote() {
   if (quoteData) {
     // Drawing the quote text on canvas
-    textSize(32);
+    textSize(52); //text size of the fetched quote
     textAlign(LEFT, TOP);
     const padding = 20;
-    const lineHeight = 40;
+    const lineHeight = 62; //height of the fetched quote rectangle from base
     const quoteText = quoteData.content;
     const author = "- " + quoteData.author;
     const textBoxWidth = width - 2 * padding;
@@ -185,7 +184,13 @@ class CircleGrid {
     for (let y = 0; y < video.height; y += this.gridSize) {
       let row = [];
       for (let x = 0; x < video.width; x += this.gridSize) {
-        row.push(new CircleClass(x + this.gridSize / 2, y + this.gridSize / 2, this.gridSize / 2));
+        row.push(
+          new CircleClass(
+            x + this.gridSize / 2,
+            y + this.gridSize / 2,
+            this.gridSize / 2
+          )
+        );
       }
       this.circles.push(row);
     }
@@ -193,13 +198,13 @@ class CircleGrid {
 
   display() {
     // Start of the mirroring effect
-    push();//with the help of Kate Hartman (Mirror)
+    push(); //with the help of Kate Hartman (Mirror)
     translate(video.width, 0);
     scale(-1, 1);
-  
+
     video.loadPixels();
     this.gridSlider = slider.value();
-  
+
     for (let i = 0; i < this.circles.length; i++) {
       for (let j = 0; j < this.circles[i].length; j++) {
         let x = j * this.gridSize;
@@ -211,16 +216,16 @@ class CircleGrid {
         this.circles[i][j].display();
       }
     }
-  
+
     // End of the mirroring effect
     pop();
-  
+
     // Randomly change color of one circle
     let randomRow = int(random(this.circles.length));
     let randomCol = int(random(this.circles[0].length));
-    this.circles[randomRow][randomCol].c = listOfColors[int(random(0, listOfColors.length))];
+    this.circles[randomRow][randomCol].c =
+      listOfColors[int(random(0, listOfColors.length))];
   }
-  
 }
 
 function keyPressed() {
