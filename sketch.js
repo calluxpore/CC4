@@ -189,9 +189,14 @@ class CircleGrid {
   }
 
   display() {
+    // Start of the mirroring effect
+    push();//with the help of Kate Hartman (Mirror)
+    translate(video.width, 0);
+    scale(-1, 1);
+  
     video.loadPixels();
     this.gridSlider = slider.value();
-
+  
     for (let i = 0; i < this.circles.length; i++) {
       for (let j = 0; j < this.circles[i].length; j++) {
         let x = j * this.gridSize;
@@ -203,12 +208,16 @@ class CircleGrid {
         this.circles[i][j].display();
       }
     }
-
+  
+    // End of the mirroring effect
+    pop();
+  
     // Randomly change color of one circle
     let randomRow = int(random(this.circles.length));
     let randomCol = int(random(this.circles[0].length));
     this.circles[randomRow][randomCol].c = listOfColors[int(random(0, listOfColors.length))];
   }
+  
 }
 
 function keyPressed() {
